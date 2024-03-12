@@ -10,13 +10,15 @@ var level = 0;
 var currentScore = 0;
 var highscore = 0;
 
-$(document).on("click touchstart", function () {
+function startGame() {
   if (!started) {
     $("#level-title").text("Level " + level);
     nextSequence();
     started = true;
   }
-});
+}
+
+$(document).on("click touchstart", startGame);
 
 $(".btn").click(function () {
   var userChosenColour = $(this).attr("id");
@@ -30,8 +32,6 @@ $(".btn").click(function () {
 
 function checkAnswer(currentLevel) {
   if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-    console.log("success");
-
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(function () {
         nextSequence();
@@ -47,17 +47,18 @@ function checkAnswer(currentLevel) {
     $("body").addClass("game-over");
     setTimeout(function () {
       $("body").removeClass("game-over");
-    }, 200);
+    }, 100);
 
     if (currentScore > highscore) {
       highscore = currentScore;
       $("#highscore").text("Highscore: " + highscore);
     }
 
-    $("#level-title").text("Game Over, Press Any Key to Restart.");
-    startOver();
+    $("#level-title").text("Game Over, Tap to Restart.");
 
-    console.log("wrong");
+    setTimeout(function () {
+      startOver();
+    }, 1000);
   }
 }
 
@@ -73,11 +74,13 @@ function nextSequence() {
   var randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
 
-  $("#" + randomChosenColour)
-    .fadeIn(100)
-    .fadeOut(100)
-    .fadeIn(100);
-  playSound(randomChosenColour);
+  setTimeout(function () {
+    $("#" + randomChosenColour)
+      .fadeIn(100)
+      .fadeOut(100)
+      .fadeIn(100);
+    playSound(randomChosenColour);
+  }, 200);
 }
 
 function playSound(name) {
@@ -93,9 +96,14 @@ function animatePress(currentColor) {
 }
 
 function startOver() {
-  currentScore = 0;
-  $("#currentScore").text("Current Score: " + currentScore);
-  level = 0;
-  gamePattern = [];
-  started = false;
+  setTimeout(function () {
+    currentScore = 0;
+    $("#currentScore").text("Current Score: " + currentScore);
+    level = 0;
+    gamePattern = [];
+    started = false;
+  }, 300);
+  setTimeout(function () {
+    startGame();
+  }, 4000);
 }
