@@ -10,7 +10,7 @@ var level = 0;
 var currentScore = 0;
 var highscore = 0;
 
-$(document).keypress(function () {
+$(document).on("click touchstart", function () {
   if (!started) {
     $("#level-title").text("Level " + level);
     nextSequence();
