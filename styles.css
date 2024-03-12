@@ -13,16 +13,14 @@ body {
 #currentScore {
   font-family: "Press Start 2P", cursive;
   font-size: 2rem;
-  margin: 5%;
-  margin-bottom: 2%;
+  margin: 5% 5% 0 5%;
   color: #fef2bf;
 }
 
 #highscore {
   font-family: "Press Start 2P", cursive;
   font-size: 2rem;
-
-  margin-bottom: 2%;
+  margin: 1% 5% 0 5%;
   color: #fef2bf;
 }
 
