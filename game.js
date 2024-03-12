@@ -7,6 +7,9 @@ var userClickedPattern = [];
 var started = false;
 var level = 0;
 
+var currentScore = 0;
+var highscore = 0;
+
 $(document).keypress(function () {
   if (!started) {
     $("#level-title").text("Level " + level);
@@ -32,6 +35,10 @@ function checkAnswer(currentLevel) {
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(function () {
         nextSequence();
+
+        //add score if correct
+        currentScore++;
+        $("#currentScore").text("Current Score: " + currentScore);
       }, 1000);
     }
   } else {
@@ -42,8 +49,14 @@ function checkAnswer(currentLevel) {
       $("body").removeClass("game-over");
     }, 200);
 
+    if (currentScore > highscore) {
+      highscore = currentScore;
+      $("#highscore").text("Highscore: " + highscore);
+    }
+
     $("#level-title").text("Game Over, Press Any Key to Restart.");
     startOver();
+
     console.log("wrong");
   }
 }
@@ -80,6 +93,8 @@ function animatePress(currentColor) {
 }
 
 function startOver() {
+  currentScore = 0;
+  $("#currentScore").text("Current Score: " + currentScore);
   level = 0;
   gamePattern = [];
   started = false;
